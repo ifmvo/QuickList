@@ -4,6 +4,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/txt"
         android:layout_width="match_parent"
-        tools:text="adfad"
+        tools:text="adfadfasdfads"
         android:padding="15dp"
         android:layout_height="wrap_content"/>
