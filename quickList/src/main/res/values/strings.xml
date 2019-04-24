@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">QuickList</string>
+
+    <string name="empty">这里什么都没有</string>
+
+    <string name="exception">请求错误，点我刷新</string>
+    <string name="no_more">已经到底了</string>
+    <string name="loading_more">正在加载更多</string>
 </resources>

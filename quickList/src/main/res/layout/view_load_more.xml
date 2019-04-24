@@ -17,7 +17,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_4"
                 android:text="@string/loading_more"
-                android:textColor="@color/c_txt_2"
                 android:textSize="@dimen/sp_14"/>
     </LinearLayout>
 
@@ -33,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/c_txt_2"
                 android:text="@string/exception"/>
 
     </FrameLayout>
@@ -48,7 +46,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/no_more"
-                android:textColor="@color/c_txt_2"/>
+                android:text="@string/no_more"/>
     </FrameLayout>
 </FrameLayout>
