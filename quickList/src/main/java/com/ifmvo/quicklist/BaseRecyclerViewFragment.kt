@@ -29,7 +29,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
     lateinit var flBottomView: FrameLayout
     lateinit var llLoading: LinearLayout
 
-    lateinit var mAdapter: BaseQuickAdapter<T, P>
+    var mAdapter: BaseQuickAdapter<T, P>? = null
 
     override fun onCreateViewLazy(savedInstanceState: Bundle?) {
         super.onCreateViewLazy(savedInstanceState)
@@ -43,9 +43,8 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         rlParent = findViewById(R.id.rlParent) as RelativeLayout
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout) as SwipeRefreshLayout
 
-        initBeforeGetData()
-
-        mAdapter = getRecyclerViewAdapter()
+        initRecyclerViewAdapter()
+        beforeGetData()
 
         recyclerView.layoutManager = getRecyclerViewLayoutManager()
         recyclerView.addItemDecoration(getRecyclerViewItemDecoration())
@@ -55,22 +54,22 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         if (canRefresh()) {
             swipeRefreshLayout.setOnRefreshListener {
                 mCurrentPage = 1
-                getData(mCurrentPage, false)
+                getData(mCurrentPage)
             }
         }
         swipeRefreshLayout.isEnabled = canRefresh()
 
         if (canLoadMore()) {
-            mAdapter.setOnLoadMoreListener({
+            mAdapter?.setOnLoadMoreListener({
                 mCurrentPage++
-                getData(mCurrentPage, false)
+                getData(mCurrentPage)
             }, recyclerView)
         }
 
-        mAdapter.setLoadMoreView(CommonLoadMoreView())
+        mAdapter?.setLoadMoreView(CommonLoadMoreView())
 
         if (!canAutoLoadMore()) {
-            mAdapter.disableLoadMoreIfNotFullPage(recyclerView)
+            mAdapter?.disableLoadMoreIfNotFullPage(recyclerView)
         }
 
         recyclerView.adapter = mAdapter
@@ -78,7 +77,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         /*
          * 初始化完成，首次 显示 加载 loading ， 并请求数据
          */
-        getData(mCurrentPage, false)
+        getData(mCurrentPage)
     }
 
     /**
@@ -87,7 +86,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
     protected fun handleError(errorMsg: String?) {
         swipeRefreshLayout.isRefreshing = false
         llLoading.visibility = View.GONE
-        mAdapter.loadMoreFail()
+        mAdapter?.loadMoreFail()
         setEmpty(errorMsg)
     }
 
@@ -99,7 +98,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         val view = View.inflate(mContext, R.layout.view_empty, null)
         val tvText = view.findViewById<TextView>(R.id.tv_empty)
         tvText.text = msg
-        mAdapter.emptyView = view
+        mAdapter?.emptyView = view
     }
 
     /**
@@ -110,18 +109,18 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
     fun handleListData(listData: List<T>?, page: Int) {
         if (page == 1) {
             if (listData?.isNotEmpty() == true) {
-                mAdapter.setNewData(listData)
+                mAdapter?.setNewData(listData)
             } else {
-                mAdapter.setNewData(mutableListOf())
+                mAdapter?.setNewData(mutableListOf())
                 setEmpty(getEmptyTxt())
             }
         } else {
-            mAdapter.loadMoreComplete()
+            mAdapter?.loadMoreComplete()
 
             if (listData?.isNotEmpty() == true) {
-                mAdapter.addData(listData)
+                mAdapter?.addData(listData)
             } else {
-                mAdapter.loadMoreEnd(false)
+                mAdapter?.loadMoreEnd(false)
             }
         }
         swipeRefreshLayout.isRefreshing = false
@@ -129,19 +128,21 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
     }
 
     /**
-     * 必须重写
+     * 初始化 Adapter 之后，getData 之前
      */
-    protected abstract fun initBeforeGetData()
+    protected fun beforeGetData() {
+
+    }
 
     /**
      * 必须重写
      */
-    protected abstract fun getRecyclerViewAdapter(): BaseQuickAdapter<T, P>
+    protected abstract fun initRecyclerViewAdapter()
 
     /**
      * 必须重写
      */
-    protected abstract fun getData(currentPage: Int, showLoading: Boolean)
+    protected abstract fun getData(currentPage: Int)
 
     /**
      * 提供重写
@@ -151,7 +152,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
     /**
      * 提供重写
      */
-    open fun getRecyclerViewItemDecoration() =
+    open fun getRecyclerViewItemDecoration(): RecyclerView.ItemDecoration =
         CommonItemDecoration((0.5 * mContext.resources.displayMetrics.density).toInt())
 
     /**

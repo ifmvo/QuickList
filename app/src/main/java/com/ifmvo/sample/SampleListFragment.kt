@@ -1,5 +1,7 @@
 package com.ifmvo.sample
 
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.ifmvo.quicklist.BaseRecyclerViewFragment
@@ -11,19 +13,15 @@ import com.ifmvo.quicklist.BaseRecyclerViewFragment
  */
 class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
 
-    override fun initBeforeGetData() {
-
-    }
-
-    override fun getRecyclerViewAdapter(): BaseQuickAdapter<String, BaseViewHolder> {
-        return object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.list_item_txt) {
+    override fun initRecyclerViewAdapter() {
+        mAdapter = object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.list_item_txt) {
             override fun convert(helper: BaseViewHolder, item: String?) {
                 helper.setText(R.id.txt, item)
             }
         }
     }
 
-    override fun getData(currentPage: Int, showLoading: Boolean) {
+    override fun getData(currentPage: Int) {
         val list = mutableListOf<String>()
         list.add("1")
         list.add("2")
@@ -36,5 +34,21 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
         list.add("9")
         list.add("10")
         handleListData(list, currentPage)
+    }
+
+    override fun getRecyclerViewItemDecoration(): RecyclerView.ItemDecoration {
+        return super.getRecyclerViewItemDecoration()
+    }
+
+    override fun getRecyclerViewLayoutManager(): LinearLayoutManager {
+        return super.getRecyclerViewLayoutManager()
+    }
+
+    override fun canRefresh(): Boolean {
+        return super.canRefresh()
+    }
+
+    override fun canLoadMore(): Boolean {
+        return super.canLoadMore()
     }
 }
