@@ -130,7 +130,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
     /**
      * 初始化 Adapter 之后，getData 之前
      */
-    protected fun beforeGetData() {
+    open fun beforeGetData() {
 
     }
 
@@ -147,7 +147,8 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
     /**
      * 提供重写
      */
-    open fun getRecyclerViewLayoutManager() = LinearLayoutManager(mContext)
+    open fun getRecyclerViewLayoutManager(): RecyclerView.LayoutManager =
+        LinearLayoutManager(mContext)
 
     /**
      * 提供重写

@@ -1,6 +1,5 @@
 package com.ifmvo.sample
 
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -36,11 +35,19 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
         handleListData(list, currentPage)
     }
 
+    override fun getThemeColor(): Int {
+        return super.getThemeColor()
+    }
+
+    override fun beforeGetData() {
+        super.beforeGetData()
+    }
+
     override fun getRecyclerViewItemDecoration(): RecyclerView.ItemDecoration {
         return super.getRecyclerViewItemDecoration()
     }
 
-    override fun getRecyclerViewLayoutManager(): LinearLayoutManager {
+    override fun getRecyclerViewLayoutManager(): RecyclerView.LayoutManager {
         return super.getRecyclerViewLayoutManager()
     }
 
