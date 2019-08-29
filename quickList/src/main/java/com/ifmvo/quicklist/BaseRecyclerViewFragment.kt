@@ -93,7 +93,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
     /**
      * 在处理List 中 第一页就没有数据，会自动调用
      */
-    protected fun setEmpty(msg: String? = "没有数据") {
+    private fun setEmpty(msg: String? = "没有数据") {
         //没有数据
         val view = View.inflate(mContext, R.layout.view_empty, null)
         val tvText = view.findViewById<TextView>(R.id.tv_empty)
@@ -112,7 +112,9 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
                 mAdapter?.setNewData(listData)
             } else {
                 mAdapter?.setNewData(mutableListOf())
-                setEmpty(getEmptyTxt())
+                if (showEmpty()) {
+                    setEmpty(getEmptyTxt())
+                }
             }
         } else {
             mAdapter?.loadMoreComplete()
