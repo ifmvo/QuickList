@@ -47,6 +47,9 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         beforeGetData()
 
         recyclerView.layoutManager = getRecyclerViewLayoutManager()
+        if (recyclerView.itemDecorationCount > 0){
+            recyclerView.removeItemDecorationAt(0)
+        }
         recyclerView.addItemDecoration(getRecyclerViewItemDecoration())
 
         swipeRefreshLayout.setColorSchemeColors(getThemeColor())
