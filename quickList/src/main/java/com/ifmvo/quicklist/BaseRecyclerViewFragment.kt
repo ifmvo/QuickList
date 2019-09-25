@@ -69,7 +69,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
             }, recyclerView)
         }
 
-        mAdapter?.setLoadMoreView(CommonLoadMoreView())
+//        mAdapter?.setLoadMoreView(CommonLoadMoreView())
 
         if (!canAutoLoadMore()) {
             mAdapter?.disableLoadMoreIfNotFullPage(recyclerView)
