@@ -32,6 +32,11 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
         list.add("8")
         list.add("9")
         list.add("10")
+
+        if (currentPage == 5) {
+            list.clear()
+        }
+
         handleListData(list, currentPage)
     }
 

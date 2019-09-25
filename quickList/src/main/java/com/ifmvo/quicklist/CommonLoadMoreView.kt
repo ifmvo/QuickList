@@ -13,15 +13,15 @@ class CommonLoadMoreView : LoadMoreView() {
         return R.layout.view_load_more
     }
 
-    protected override fun getLoadingViewId(): Int {
+    override fun getLoadingViewId(): Int {
         return R.id.load_more_loading_view
     }
 
-    protected override fun getLoadFailViewId(): Int {
+    override fun getLoadFailViewId(): Int {
         return R.id.load_more_load_fail_view
     }
 
-    protected override fun getLoadEndViewId(): Int {
+    override fun getLoadEndViewId(): Int {
         return R.id.load_more_load_end_view
     }
 }
