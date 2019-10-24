@@ -34,7 +34,11 @@ abstract class LazyFragment : Fragment() {
 
     private val tagRootFrameLayout = "tag_root_framelayout"
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.container = container
 
         val isVisible: Boolean =
@@ -66,7 +70,11 @@ abstract class LazyFragment : Fragment() {
             onCreateViewLazy(savedInstanceState)
             isInitReady = true
         }
-        return if (rootView == null) super.onCreateView(inflater, container, savedInstanceState) else rootView
+        return if (rootView == null) super.onCreateView(
+            inflater,
+            container,
+            savedInstanceState
+        ) else rootView
     }
 
     protected fun findViewById(id: Int): View? {
@@ -147,22 +155,6 @@ abstract class LazyFragment : Fragment() {
             this.mContext = context
         }
     }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        try {
-            val childFragmentManager = Fragment::class.java.getDeclaredField("mChildFragmentManager")
-            childFragmentManager.isAccessible = true
-            childFragmentManager.set(this, null)
-        } catch (e: NoSuchFieldException) {
-            throw RuntimeException(e)
-        } catch (e: IllegalAccessException) {
-            throw RuntimeException(e)
-        }
-
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
