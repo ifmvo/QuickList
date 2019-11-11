@@ -3,10 +3,7 @@ package com.ifmvo.quicklist
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -90,17 +87,24 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         swipeRefreshLayout.isRefreshing = false
         llLoading.visibility = View.GONE
         mAdapter?.loadMoreFail()
-        setEmpty(errorMsg)
+        setEmpty(errorMsg, getEmptyIcon())
     }
 
     /**
      * 在处理List 中 第一页就没有数据，会自动调用
      */
-    private fun setEmpty(msg: String? = "没有数据") {
+    private fun setEmpty(msg: String? = "没有数据", iconRes: Int = 0) {
         //没有数据
         val view = View.inflate(mContext, R.layout.view_empty, null)
-        val tvText = view.findViewById<TextView>(R.id.tv_empty)
-        tvText.text = msg
+
+        if (msg?.isNotEmpty() == true){
+            val tvText = view.findViewById<TextView>(R.id.tv_empty)
+            tvText.text = msg
+        }
+        if (iconRes != 0){
+            val ivImg = view.findViewById<ImageView>(R.id.iv_empty)
+            ivImg.setImageResource(iconRes)
+        }
         mAdapter?.emptyView = view
     }
 
@@ -116,7 +120,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
             } else {
                 mAdapter?.setNewData(mutableListOf())
                 if (showEmpty()) {
-                    setEmpty(getEmptyTxt())
+                    setEmpty(getEmptyTxt(), getEmptyIcon())
                 }
             }
         } else {
@@ -190,4 +194,6 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
      * 提供重写
      */
     open fun getEmptyTxt(): String = "这里什么都没有"
+
+    open fun getEmptyIcon(): Int = 0
 }
