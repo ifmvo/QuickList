@@ -1,6 +1,5 @@
 package com.ifmvo.sample
 
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -13,7 +12,6 @@ import com.ifmvo.quicklist.BaseRecyclerViewFragment
  */
 class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
 
-    private val mList = mutableListOf<String>()
 
     override fun initRecyclerViewAdapter() {
         mAdapter = object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.list_item_txt) {
@@ -24,23 +22,8 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
 
     }
 
-//    fun godAction() {
-//
-//        val textView = mAdapter?.getViewByPosition(recyclerView, 0, R.id.txt) as? TextView
-//        textView?.text = "replace"
-
-//        mAdapter?.addData(0, "add")
-//        recyclerView.scrollToPosition(0)
-
-//        val index = 2
-//        mList.removeAt(index)
-//        mList.add(index, "replace")
-//        mAdapter?.notifyItemChanged(index)
-//    }
-
     override fun getData(currentPage: Int) {
-        mList.clear()
-
+        val mList = mutableListOf<String>()
         mList.add("1")
         mList.add("2")
         mList.add("3")
@@ -51,7 +34,6 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
         mList.add("8")
         mList.add("9")
         mList.add("10")
-
         handleListData(mList, currentPage)
     }
 
@@ -76,10 +58,10 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
     }
 
     override fun canRefresh(): Boolean {
-        return false
+        return true
     }
 
     override fun canLoadMore(): Boolean {
-        return false
+        return true
     }
 }
