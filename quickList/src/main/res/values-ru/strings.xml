@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_list_text_exception">Нагрузка не удалось, пожалуйста, нажмите мне, чтобы попробовать еще раз</string>
+    <string name="empty">Нет контента</string>
+    <string name="quick_list_text_loading_more">Загрузка…</string>
+    <string name="quick_list_text_no_more">Больше никаких данных</string>
+</resources>

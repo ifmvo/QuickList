@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_list_text_exception">A carga falhou, clique em mim para tentar novamente</string>
+    <string name="empty">Sem conteúdo</string>
+    <string name="quick_list_text_loading_more">Carregar…</string>
+    <string name="quick_list_text_no_more">Sem mais dados</string>
+</resources>

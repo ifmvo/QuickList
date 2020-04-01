@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="empty">No content</string>
     <string name="quick_list_text_exception">Load failed, please click me to try again</string>
-    <string name="quick_list_text_no_more">No more data</string>
+    <string name="empty">No content</string>
     <string name="quick_list_text_loading_more">Loading…</string>
+    <string name="quick_list_text_no_more">No more data</string>
 </resources>

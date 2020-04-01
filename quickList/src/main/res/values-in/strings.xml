@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_list_text_exception">Gagal memuat, silakan klik saya untuk mencoba lagi</string>
+    <string name="empty">Tidak ada isi</string>
+    <string name="quick_list_text_loading_more">Memuat…</string>
+    <string name="quick_list_text_no_more">Tidak ada lagi data</string>
+</resources>

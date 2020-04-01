@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_list_text_exception">載入失敗，請點我重試</string>
+    <string name="empty">沒有內容</string>
+    <string name="quick_list_text_loading_more">正在載入中…</string>
+    <string name="quick_list_text_no_more">沒有更多資料</string>
+</resources>

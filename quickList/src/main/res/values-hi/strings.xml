@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quick_list_text_exception">लोड विफल रहा है, कृपया मुझे फिर से कोशिश करने के लिए क्लिक करें</string>
+    <string name="empty">कोई सामग्री नहीं</string>
+    <string name="quick_list_text_loading_more">लोड…</string>
+    <string name="quick_list_text_no_more">कोई और डेटा नहीं</string>
+</resources>
