@@ -28,7 +28,7 @@ dependencies {
     api "androidx.core:core-ktx:1.2.0"
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.49-androidx'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.3'
     api 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 }

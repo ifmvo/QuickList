@@ -4,4 +4,5 @@
     <string name="empty">कोई सामग्री नहीं</string>
     <string name="quick_list_text_loading_more">लोड…</string>
     <string name="quick_list_text_no_more">कोई और डेटा नहीं</string>
+    <string name="quick_list_text_complete">अधिक लोड करने के लिए क्लिक करें</string>
 </resources>

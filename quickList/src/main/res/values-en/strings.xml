@@ -4,4 +4,5 @@
     <string name="empty">No content</string>
     <string name="quick_list_text_loading_more">Loading…</string>
     <string name="quick_list_text_no_more">No more data</string>
+    <string name="quick_list_text_complete">Click to load more</string>
 </resources>

@@ -2,10 +2,12 @@ package com.ifmvo.sample
 
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.module.LoadMoreModule
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ifmvo.quicklist.BaseRecyclerViewFragment
 
-/* 
+
+/*
  * (●ﾟωﾟ●)
  * 
  * Created by Matthew_Chen on 2019-04-24.
@@ -14,27 +16,25 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
 
 
     override fun initRecyclerViewAdapter() {
-        mAdapter = object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.list_item_txt) {
-            override fun convert(helper: BaseViewHolder, item: String?) {
-                helper.setText(R.id.txt, item)
+
+        mAdapter = object : BaseQuickAdapter<String, BaseViewHolder>(R.layout.list_item_txt), LoadMoreModule {
+            override fun convert(holder: BaseViewHolder, item: String) {
+                holder.setText(R.id.txt, item)
             }
         }
-
     }
 
     override fun getData(currentPage: Int) {
-        val mList = mutableListOf<String>()
-        mList.add("1")
-        mList.add("2")
-        mList.add("3")
-        mList.add("4")
-        mList.add("5")
-        mList.add("6")
-        mList.add("7")
-        mList.add("8")
-        mList.add("9")
-        mList.add("10")
-        handleListData(mList, currentPage)
+        recyclerView.postDelayed({
+            val mList = mutableListOf<String>()
+            mList.add("1")
+            mList.add("2")
+            mList.add("3")
+            mList.add("4")
+            mList.add("5")
+            mList.add("6")
+            handleListData(mList, currentPage)
+        }, 1000)
     }
 
     override fun getEmptyIcon(): Int {
@@ -62,6 +62,10 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
     }
 
     override fun canLoadMore(): Boolean {
+        return true
+    }
+
+    override fun canAutoLoadMore(): Boolean {
         return true
     }
 }

@@ -4,4 +4,5 @@
     <string name="empty">沒有內容</string>
     <string name="quick_list_text_loading_more">正在載入中…</string>
     <string name="quick_list_text_no_more">沒有更多資料</string>
+    <string name="quick_list_text_complete">點擊載入更多</string>
 </resources>

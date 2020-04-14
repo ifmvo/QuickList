@@ -1,0 +1,31 @@
+package com.ifmvo.quicklist
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.chad.library.adapter.base.loadmore.BaseLoadMoreView
+import com.chad.library.adapter.base.util.getItemView
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
+
+/* 
+ * (●ﾟωﾟ●)
+ * 
+ * Created by Matthew Chen on 2020-04-14.
+ */
+class CommonLoadMoreView : BaseLoadMoreView() {
+
+    override fun getRootView(parent: ViewGroup): View =
+        LayoutInflater.from(parent.context).inflate(R.layout.view_load_more, parent, false)
+
+    override fun getLoadingView(holder: BaseViewHolder): View =
+        holder.getView(R.id.load_more_loading_view)
+
+    override fun getLoadComplete(holder: BaseViewHolder): View =
+        holder.getView(R.id.load_more_load_complete_view)
+
+    override fun getLoadEndView(holder: BaseViewHolder): View =
+        holder.getView(R.id.load_more_load_end_view)
+
+    override fun getLoadFailView(holder: BaseViewHolder): View =
+        holder.getView(R.id.load_more_load_fail_view)
+}

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.matthewchen.netlive.base.CommonItemDecoration
 
 /*
@@ -44,7 +44,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         beforeGetData()
 
         recyclerView.layoutManager = getRecyclerViewLayoutManager()
-        if (recyclerView.itemDecorationCount > 0){
+        if (recyclerView.itemDecorationCount > 0) {
             recyclerView.removeItemDecorationAt(0)
         }
         recyclerView.addItemDecoration(getRecyclerViewItemDecoration())
@@ -60,17 +60,14 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         swipeRefreshLayout.isEnabled = canRefresh()
 
         if (canLoadMore()) {
-            mAdapter?.setOnLoadMoreListener({
+            mAdapter?.loadMoreModule?.setOnLoadMoreListener {
                 mCurrentPage++
                 getData(mCurrentPage)
-            }, recyclerView)
+            }
         }
+        mAdapter?.loadMoreModule?.loadMoreView = CommonLoadMoreView()
 
-        mAdapter?.setLoadMoreView(CommonLoadMoreView())
-
-        if (!canAutoLoadMore()) {
-            mAdapter?.disableLoadMoreIfNotFullPage(recyclerView)
-        }
+        mAdapter?.loadMoreModule?.isAutoLoadMore = canAutoLoadMore()
 
         recyclerView.adapter = mAdapter
 
@@ -86,7 +83,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
     protected fun handleError(errorMsg: String?) {
         swipeRefreshLayout.isRefreshing = false
         llLoading.visibility = View.GONE
-        mAdapter?.loadMoreFail()
+        mAdapter?.loadMoreModule?.loadMoreFail()
         setEmpty(errorMsg, getEmptyIcon())
     }
 
@@ -97,15 +94,15 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         //没有数据
         val view = View.inflate(mContext, R.layout.view_empty, null)
 
-        if (msg?.isNotEmpty() == true){
+        if (msg?.isNotEmpty() == true) {
             val tvText = view.findViewById<TextView>(R.id.tv_empty)
             tvText.text = msg
         }
-        if (iconRes != 0){
+        if (iconRes != 0) {
             val ivImg = view.findViewById<ImageView>(R.id.iv_empty)
             ivImg.setImageResource(iconRes)
         }
-        mAdapter?.emptyView = view
+        mAdapter?.setEmptyView(view)
     }
 
     /**
@@ -115,23 +112,22 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
      */
     fun handleListData(listData: List<T>?, page: Int) {
         if (page == 1) {
-            if (listData?.isNotEmpty() == true) {
-                mAdapter?.setNewData(listData)
-            } else {
-                mAdapter?.setNewData(mutableListOf())
-                if (showEmpty()) {
-                    setEmpty(getEmptyTxt(), getEmptyIcon())
-                }
+            mAdapter?.setList(listData)
+            if (listData?.isEmpty() != false && showEmpty()) {
+                setEmpty(getEmptyTxt(), getEmptyIcon())
             }
         } else {
-            mAdapter?.loadMoreComplete()
-
             if (listData?.isNotEmpty() == true) {
                 mAdapter?.addData(listData)
-            } else {
-                mAdapter?.loadMoreEnd(false)
             }
         }
+
+        if (listData?.isNotEmpty() == true) {
+            mAdapter?.loadMoreModule?.loadMoreComplete()
+        } else {
+            mAdapter?.loadMoreModule?.loadMoreEnd()
+        }
+
         swipeRefreshLayout.isRefreshing = false
         llLoading.visibility = View.GONE
     }
@@ -157,13 +153,13 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
      * 提供重写
      */
     open fun getRecyclerViewLayoutManager(): RecyclerView.LayoutManager =
-        LinearLayoutManager(mContext)
+            LinearLayoutManager(mContext)
 
     /**
      * 提供重写
      */
     open fun getRecyclerViewItemDecoration(): RecyclerView.ItemDecoration =
-        CommonItemDecoration((0.5 * mContext.resources.displayMetrics.density).toInt())
+            CommonItemDecoration((0.5 * mContext.resources.displayMetrics.density).toInt())
 
     /**
      * 提供重写 主题颜色

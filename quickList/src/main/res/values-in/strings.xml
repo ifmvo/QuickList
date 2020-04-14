@@ -4,4 +4,5 @@
     <string name="empty">Tidak ada isi</string>
     <string name="quick_list_text_loading_more">Memuat…</string>
     <string name="quick_list_text_no_more">Tidak ada lagi data</string>
+    <string name="quick_list_text_complete">Klik untuk memuat lebih banyak</string>
 </resources>
