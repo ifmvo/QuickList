@@ -25,7 +25,7 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
     }
 
     override fun getData(currentPage: Int) {
-        recyclerView.postDelayed({
+        recyclerView?.postDelayed({
             val mList = mutableListOf<String>()
             mList.add("1")
             mList.add("2")

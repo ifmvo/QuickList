@@ -19,12 +19,12 @@ import com.matthewchen.netlive.base.CommonItemDecoration
 abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() {
 
     var mCurrentPage = 1
-    lateinit var flTopView: FrameLayout
-    lateinit var recyclerView: RecyclerView
-    lateinit var rlParent: RelativeLayout
-    lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    lateinit var flBottomView: FrameLayout
-    lateinit var llLoading: LinearLayout
+    var flTopView: FrameLayout? = null
+    var recyclerView: RecyclerView? = null
+    var rlParent: RelativeLayout? = null
+    var swipeRefreshLayout: SwipeRefreshLayout? = null
+    var flBottomView: FrameLayout? = null
+    var llLoading: LinearLayout? = null
 
     var mAdapter: BaseQuickAdapter<T, P>? = null
 
@@ -43,21 +43,21 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
         initRecyclerViewAdapter()
         beforeGetData()
 
-        recyclerView.layoutManager = getRecyclerViewLayoutManager()
-        if (recyclerView.itemDecorationCount > 0) {
-            recyclerView.removeItemDecorationAt(0)
+        recyclerView?.layoutManager = getRecyclerViewLayoutManager()
+        if (recyclerView?.itemDecorationCount ?: 0 > 0) {
+            recyclerView?.removeItemDecorationAt(0)
         }
-        recyclerView.addItemDecoration(getRecyclerViewItemDecoration())
+        recyclerView?.addItemDecoration(getRecyclerViewItemDecoration())
 
-        swipeRefreshLayout.setColorSchemeColors(getThemeColor())
+        swipeRefreshLayout?.setColorSchemeColors(getThemeColor())
 
         if (canRefresh()) {
-            swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout?.setOnRefreshListener {
                 mCurrentPage = 1
                 getData(mCurrentPage)
             }
         }
-        swipeRefreshLayout.isEnabled = canRefresh()
+        swipeRefreshLayout?.isEnabled = canRefresh()
 
         if (canLoadMore()) {
             mAdapter?.loadMoreModule?.setOnLoadMoreListener {
@@ -69,7 +69,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
 
         mAdapter?.loadMoreModule?.isAutoLoadMore = canAutoLoadMore()
 
-        recyclerView.adapter = mAdapter
+        recyclerView?.adapter = mAdapter
 
         /*
          * 初始化完成，首次 显示 加载 loading ， 并请求数据
@@ -81,8 +81,8 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
      * 再网络请求的 error 回调使用
      */
     protected fun handleError(errorMsg: String?) {
-        swipeRefreshLayout.isRefreshing = false
-        llLoading.visibility = View.GONE
+        swipeRefreshLayout?.isRefreshing = false
+        llLoading?.visibility = View.GONE
         mAdapter?.loadMoreModule?.loadMoreFail()
         setEmpty(errorMsg, getEmptyIcon())
     }
@@ -128,8 +128,8 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
             mAdapter?.loadMoreModule?.loadMoreEnd()
         }
 
-        swipeRefreshLayout.isRefreshing = false
-        llLoading.visibility = View.GONE
+        swipeRefreshLayout?.isRefreshing = false
+        llLoading?.visibility = View.GONE
     }
 
     /**
