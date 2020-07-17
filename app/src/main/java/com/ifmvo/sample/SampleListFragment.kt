@@ -25,16 +25,23 @@ class SampleListFragment : BaseRecyclerViewFragment<String, BaseViewHolder>() {
     }
 
     override fun getData(currentPage: Int) {
-        recyclerView?.postDelayed({
-            val mList = mutableListOf<String>()
-            mList.add("1")
-            mList.add("2")
-            mList.add("3")
-            mList.add("4")
-            mList.add("5")
-            mList.add("6")
-            handleListData(mList, currentPage)
-        }, 1000)
+        if (currentPage == 1) {
+            recyclerView?.postDelayed({
+                val mList = mutableListOf<String>()
+                for (index in 1..10) {
+                    mList.add("${((currentPage - 1) * 10) + index}")
+                }
+                handleListData(mList, currentPage)
+            }, 4000)
+        } else {
+            recyclerView?.postDelayed({
+                val mList = mutableListOf<String>()
+                for (index in 1..10) {
+                    mList.add("${((currentPage - 1) * 10) + index}")
+                }
+                handleListData(mList, currentPage)
+            }, 1000)
+        }
     }
 
     override fun getEmptyIcon(): Int {

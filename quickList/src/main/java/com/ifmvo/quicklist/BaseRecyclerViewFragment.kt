@@ -91,18 +91,22 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
      * 在处理List 中 第一页就没有数据，会自动调用
      */
     private fun setEmpty(msg: String? = "没有数据", iconRes: Int = 0) {
-        //没有数据
-        val view = View.inflate(mContext, R.layout.view_empty, null)
 
-        if (msg?.isNotEmpty() == true) {
-            val tvText = view.findViewById<TextView>(R.id.tv_empty)
-            tvText.text = msg
+        activity?.run {
+            //没有数据
+            val view = View.inflate(activity, R.layout.view_empty, null)
+
+            if (msg?.isNotEmpty() == true) {
+                val tvText = view.findViewById<TextView>(R.id.tv_empty)
+                tvText.text = msg
+            }
+            if (iconRes != 0) {
+                val ivImg = view.findViewById<ImageView>(R.id.iv_empty)
+                ivImg.setImageResource(iconRes)
+            }
+            mAdapter?.setEmptyView(view)
         }
-        if (iconRes != 0) {
-            val ivImg = view.findViewById<ImageView>(R.id.iv_empty)
-            ivImg.setImageResource(iconRes)
-        }
-        mAdapter?.setEmptyView(view)
+
     }
 
     /**
@@ -116,6 +120,7 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
             if (listData?.isEmpty() != false && showEmpty()) {
                 setEmpty(getEmptyTxt(), getEmptyIcon())
             }
+            mCurrentPage = 1
         } else {
             if (listData?.isNotEmpty() == true) {
                 mAdapter?.addData(listData)
