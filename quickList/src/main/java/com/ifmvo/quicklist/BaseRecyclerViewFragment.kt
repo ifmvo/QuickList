@@ -97,12 +97,12 @@ abstract class BaseRecyclerViewFragment<T, P : BaseViewHolder> : LazyFragment() 
             val view = View.inflate(activity, R.layout.view_empty, null)
 
             if (msg?.isNotEmpty() == true) {
-                val tvText = view.findViewById<TextView>(R.id.tv_empty)
-                tvText.text = msg
+                val tvText = view?.findViewById<TextView>(R.id.tv_empty)
+                tvText?.text = msg
             }
             if (iconRes != 0) {
-                val ivImg = view.findViewById<ImageView>(R.id.iv_empty)
-                ivImg.setImageResource(iconRes)
+                val ivImg = view?.findViewById<ImageView>(R.id.iv_empty)
+                ivImg?.setImageResource(iconRes)
             }
             mAdapter?.setEmptyView(view)
         }
